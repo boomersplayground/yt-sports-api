@@ -17,7 +17,14 @@ const sportId = {
 
 exports.handler = async (event, context) => {
   const { sport } = event.queryStringParameters
-  const params = `/teams?league=${sportId[sport]}&season=2024`
+  let params = ''
+
+  if (sport === "nba") {
+    // not working yet - Will fix in video 012 on the backend (serverless function)
+    params = `/teams?nbaFranchise=true`
+  } else {
+    params = `/teams?league=${sportId[sport]}&season=2024`
+  }
   const url = `${urls[sport]}${params}`
 
   const options = {
@@ -31,7 +38,7 @@ exports.handler = async (event, context) => {
 
   const teams = await axios.get(url, options)
     .then(response => {
-      console.log("tt ", response.data.response)
+      console.log("tt ", response)
       return response.data.response
     })
     .catch(error => console.log('error', error));
