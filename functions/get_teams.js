@@ -8,10 +8,17 @@ const urls = {
   "nhl": "https://v1.hockey.api-sports.io"
 }
 
-const params = "/teams?league=1&season=2024"
+const sportId = {
+  "nfl": 1,
+  "mlb": 1,
+  "nhl": 57,
+  "nba": 3
+}
 
 exports.handler = async (event, context) => {
   const { sport } = event.queryStringParameters
+  const params = `/teams?league=${sportId[sport]}&season=2024`
+  const url = `${urls[sport]}${params}`
 
   const options = {
     method: 'GET',
@@ -24,7 +31,10 @@ exports.handler = async (event, context) => {
 
 
   const teams = await axios.get(url, options)
-    .then(response => response.data.response)
+    .then(response => {
+      console.log("tt ", response.data.response)
+      return response.data.response
+    })
     .catch(error => console.log('error', error));
 
   return {
