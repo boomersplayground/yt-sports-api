@@ -8,7 +8,7 @@ const drawTeams = (teams) => {
     button.remove()
   })
 
-  teams.teams.forEach(team => {
+  teams.teams.teams.forEach(team => {
     const button = document.createElement("button")
     button.classList.add("team", team.code)
     button.innerText = team.name

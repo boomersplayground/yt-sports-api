@@ -11,19 +11,13 @@ const urls = {
 const sportId = {
   "nfl": 1,
   "mlb": 1,
-  "nhl": 57
+  "nhl": 57,
+  "nba": 3
 }
 
 exports.handler = async (event, context) => {
   const { sport } = event.queryStringParameters
-  let params = ''
-
-  if (sport === "nba") {
-    params = `/teams?nbaFranchise=true`
-  } else {
-    params = `/teams?league=${sportId[sport]}&season=2024`
-  }
-
+  const params = `/teams?league=${sportId[sport]}&season=2024`
   const url = `${urls[sport]}${params}`
 
   const options = {
